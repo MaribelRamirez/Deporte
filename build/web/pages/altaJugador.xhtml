@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <head>
+        <title>Alta jugador</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <div>Alta jugador</div>
+        <div>
+            <h:form >
+                <!--utilizar etiquetas jsf-->
+                <h1>Nombre del jugador</h1><h:inputText id="idNombre" value="#{jugadorController.jugador.nombre}"></h:inputText>
+                <h:commandButton value="Guardar" action="#{jugadorController.crearRegistro(jugadorController.jugador)}"></h:commandButton>
+            </h:form>
+        </div>       
+    </body>
+</html>

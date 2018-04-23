@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <title>Lista de Jugadores</title>
+    </h:head>
+
+    <h:body>
+        <h:form id="idForm">
+            <p:growl id="msgs" showDetail="true"/>
+            <p:dataTable 
+                id="idTabla" 
+                var="registro" 
+                value="#{jugadorController.obtenerRegistros()}"
+                scrollable="true"
+                editable="true"
+                selection="#{jugadorController.selectedJugador}"
+                rowKey="#{registro.idJugador}">
+                <f:facet name="header">
+                    CRUD JSF JUGADOR
+                </f:facet>
+                <p:ajax event="rowSelect" listener="#{jugadorController.onRowSelect}" update=":idForm:msgs"></p:ajax>
+                <p:ajax event="rowEdit" listener="#{jugadorController.onRowEdit}"></p:ajax>
+                <p:ajax event="rowEditCancel" listener="#{jugadorController.onRowCancel}"></p:ajax>
+                <p:column>
+                    <f:facet name="header">Id usuario</f:facet>
+                    <h:outputText value="#{registro.idJugador}"></h:outputText>
+                </p:column>
+                <p:column headerText="Nombre el jugador">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{registro.nombre}"></h:outputText>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{registro.nombre}"></h:inputText>
+                        </f:facet>
+                    </p:cellEditor>
+                   
+                </p:column>
+                <p:column headerText="Editar">
+                    <p:rowEditor/>
+                </p:column>
+            </p:dataTable> 
+        </h:form>
+    </h:body>
+</html>
