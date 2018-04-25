@@ -16,7 +16,7 @@ public interface JugadorService {
     public void crearRegistro(Jugador jugador);
     public List<Jugador> obtenerRegistros();
     public void actualizarRegistro(Jugador jugador);
-    public void eliminarRegistro(Integer idJugador);
+    public void eliminarRegistro(Jugador jugador);
     public Jugador obtenerRegistro(Integer idJugador);
     
 }

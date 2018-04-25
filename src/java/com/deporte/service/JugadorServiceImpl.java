@@ -34,8 +34,8 @@ public class JugadorServiceImpl implements JugadorService{
     }
 
     @Override
-    public void eliminarRegistro(Integer idJugador) {
-        jugadorDao.eliminarRegistro(idJugador);
+    public void eliminarRegistro(Jugador jugador) {
+        jugadorDao.eliminarRegistro(jugador);
     }
 
     @Override

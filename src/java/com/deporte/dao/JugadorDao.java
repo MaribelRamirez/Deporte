@@ -16,6 +16,6 @@ public interface JugadorDao {
         public List<Jugador> obtenerRegistros();
         public void crearRegistro(Jugador jugador);
         public void actualizarRegistro(Jugador jugador);
-        public void eliminarRegistro(Integer idJugador);
+        public void eliminarRegistro(Jugador jugador);
         public Jugador obtenerRegistro(Integer idJugador);
 }

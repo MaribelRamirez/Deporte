@@ -65,13 +65,14 @@ public class JugadorDaoImpl implements JugadorDao{
     }
 
     @Override
-    public void eliminarRegistro(Integer idJugador) {
+    public void eliminarRegistro(Jugador jugador) {
          try {
             //Abrir sesion 
             session=HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             //insertar el objeto en la base de datos
-            session.createQuery("DELETE FROM jugador WHERE IdJugador="+idJugador).executeUpdate();
+            //session.createQuery("DELETE FROM jugador WHERE IdJugador="+idJugador).executeUpdate();
+            session.delete(jugador);
             session.getTransaction().commit();
             session.close();
         } catch (HibernateException e) {

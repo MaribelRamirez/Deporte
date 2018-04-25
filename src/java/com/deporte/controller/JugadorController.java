@@ -5,56 +5,43 @@ import com.deporte.domain.Jugador;
 import com.deporte.service.JugadorService;
 import com.deporte.service.JugadorServiceImpl;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.event.SelectEvent;
 //tarea facet_config.xml
 @ViewScoped
 @ManagedBean(name="jugadorController")
 public class JugadorController implements Serializable{
-    private Jugador jugador;
+    private List<Jugador> listaRegistro;
     private Jugador selectedJugador;
     private JugadorService jugadorService;
     //Inicializwar objetos
     @PostConstruct
     public void init(){
-    this.jugadorService=new JugadorServiceImpl();
-    this.jugador=new Jugador();
+        this.jugadorService=new JugadorServiceImpl();
+        inicializarListaJugador();
     }   
+    //cargar la lista de registros del jugador 
+    private  void inicializarListaJugador(){
+        listaRegistro=new ArrayList<>();
+        listaRegistro=jugadorService.obtenerRegistros();
+    }
     //Métod para crear el registro
     public void crearRegistro(Jugador jugador){
         jugadorService.crearRegistro(jugador);
     }   
     
-     public List<Jugador> obtenerRegistros(){
-        return jugadorService.obtenerRegistros();
-     }
-     
-     
-     public void actualizarRegistro(Jugador jugador){
-         jugadorService.actualizarRegistro(jugador);
-     }
-     
-     public void eliminarRegistro(Integer idJugador){
-         jugadorService.eliminarRegistro(idJugador);
-     }
-     public Jugador obtenerRegistro(Integer idJugador){
-         return jugadorService.obtenerRegistro(idJugador);
-     }       
+   
     //Métod para eliminar el registro
     public void eliminarRegistro(Jugador jugador){
-        jugadorService.crearRegistro(jugador);
-    }
-
-    public Jugador getJugador() {
-        return jugador;
-    }
-
-    public void setJugador(Jugador jugador) {
-        this.jugador = jugador;
+        jugadorService.eliminarRegistro(jugador);
+        inicializarListaJugador();
     }
 
     public Jugador getSelectedJugador() {
@@ -65,20 +52,27 @@ public class JugadorController implements Serializable{
         this.selectedJugador = selectedJugador;
     }
 
-    public JugadorService getJugadorService() {
-        return jugadorService;
+    public List<Jugador> getListaRegistro() {
+        return listaRegistro;
     }
 
-    public void setJugadorService(JugadorService jugadorService) {
-        this.jugadorService = jugadorService;
+    public void setListaRegistro(List<Jugador> listaRegistro) {
+        this.listaRegistro = listaRegistro;
     }
     
-    public void onRowSelect(RowEditEvent event){
+    
+    public void onRowSelect(SelectEvent event){
         FacesMessage mensaje=new FacesMessage("Jugador actualizado",((Jugador) event.getObject()).getIdJugador().toString());
+        FacesContext.getCurrentInstance().addMessage(null, mensaje);
     }
     public void onRowEdit(RowEditEvent event){
+        jugadorService.actualizarRegistro(selectedJugador);
+        //Jugador jugador=(Jugador) event.getObject();
         FacesMessage mensaje=new FacesMessage("Jugador actualizado",((Jugador) event.getObject()).getIdJugador().toString());
+        FacesContext.getCurrentInstance().addMessage(null, mensaje);
     }
     public void onRowCancel(RowEditEvent event){
+         FacesMessage mensaje=new FacesMessage("Acción cancelado",((Jugador) event.getObject()).getIdJugador().toString());
+        FacesContext.getCurrentInstance().addMessage(null, mensaje);
     }
     }
